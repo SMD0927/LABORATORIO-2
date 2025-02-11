@@ -1,7 +1,6 @@
-# LABORATORIO-2
-## Convolución, correlación y transformación 
-
-En este laboratorio exploramos señales fisiológicas de ECG utilizando técnicas de estadística descriptiva y modelos de ruido. El objetivo es entender tanto las características propias de la señal como el impacto del ruido, analizando aspectos como la relación señal-ruido (SNR).
+# Convolución, correlación y transformación 
+ LABORATORIO - 2 PROCESAMIENTO DIGITAL DE SEÑALES 
+ 
 
 ## Requisitos
 - *Python 3.9*
@@ -12,172 +11,261 @@ En este laboratorio exploramos señales fisiológicas de ECG utilizando técnica
   - seaborn
 
 Instalar dependencias:
-bash
-pip install wfdb numpy matplotlib seaborn
+`pip install wfdb numpy matplotlib seaborn`
 
 
-## Estructura del Código
+## Convolución
 
-### 1. Lectura de Datos
-python
-import wfdb
-import numpy as np
+### 1. Convolución entre la señal x[n] y del sistema h[n]
+```python
+h = [5,6,0,0,7,7,5]
+x = [1,0,1,4,6,6,0,7,0,8]
+y = np.convolve(x,h,mode='full')
+print('h[n] =', h)
+print('x[n] =',x)
+print('y[n] =',y)
+```
+$$
+h[n] = \begin{bmatrix}
+5 & 6 & 0 & 0 & 7 & 7 & 5
+\end{bmatrix}
+$$
 
-datos = wfdb.rdrecord('rec_2')
-t = 2000
-señal = datos.p_signal[:t, 0]
+$$
+x[n] = \begin{bmatrix}
+1 & 0 & 1 & 4 & 6 & 6 & 0 & 7 & 0 & 8
+\end{bmatrix}
+$$
 
-Se utiliza wfdb.rdrecord para cargar una señal fisiológica (ECG) desde un archivo estándar en formato WFDB que fueron descargados en PhysioNet. En este caso, se seleccionan los primeros 2000 puntos de la señal. Este paso inicial permite trabajar con un subconjunto significativo de datos para realizar análisis detallados.
+$$
+y[n] = \begin{bmatrix}
+5 & 6 & 5 & 26 & 61 & 73 & 48 & 70 & 117 & 144 & 120 & 79 & 49 & 91 & 56 & 40
+\end{bmatrix}
+$$
 
----
-
-### 2. Histograma de la Señal
-python
-import seaborn as sns
-import matplotlib.pyplot as plt
-
-sns.histplot(señal, kde=True, bins=30, color='red')
-plt.hist(señal, bins=30, edgecolor='blue')
-plt.title('Histograma de Datos')
-plt.xlabel('Datos')
-plt.ylabel('Frecuencia')
-plt.show()
-
-<p align="center">
-    <img src="https://i.postimg.cc/50qyPvY9/histograma.png" alt="histograma" width="450">
-</p>
-
-El histograma muestra una distribución asimétrica con mayor concentración de valores cerca de 0 y una cola extendida a la derecha, indicando un sesgo positivo. Esto sugiere la posible presencia de ruido o eventos atípicos en la señal, aunque la mayoría de los valores se mantienen dentro de un rango fisiológico típico.
+Este código en Python calcula la convolución discreta entre dos señales utilizando la función np.convolve() de NumPy. Primero, se definen dos listas, h y x, que representan la respuesta al impulso de un sistema y una señal de entrada, respectivamente. Luego, se aplica la convolución entre estas dos señales usando np.convolve(x, h, mode='full'), lo que genera una nueva señal y cuya longitud es la suma de las longitudes de x y h menos uno. La convolución es una operación fundamental en procesamiento de señales, ya que permite analizar cómo una señal se ve afectada por un sistema. Finalmente, el código imprime las señales h, x y y para visualizar los datos y el resultado de la convolución.
 
 ---
 
-### 3. Graficado de la Señal
-python
-plt.figure(figsize=(10, 5))
-plt.plot(señal, label="Señal fisiológica")
-plt.title("ECG")
-plt.xlabel("TIEMPO [ms]")
-plt.ylabel("VOLTAJE [mV]")
-plt.legend()
+### 2. Grafico de la señal x[n] y del sistema h[n]
+```python
+fig = plt.figure(figsize=(10, 5)) 
+plt.plot(h,color='g')
+plt.stem(range(len(h)), h)
+plt.title("Sistema (santiago)")  
+plt.xlabel("(n)") 
+plt.ylabel("h [n]") 
 plt.grid()
-plt.show()
+```
 
 <p align="center">
-    <img src="https://github.com/user-attachments/assets/d8104ccb-6b13-49c2-b510-abae7d5338f3" alt="image" width="500">
+    <img src="https://github.com/user-attachments/assets/6f0bcd91-09fb-45d7-a90c-f3ebca191154" alt="imagen" width="450">
+</p>
+
+```python
+fig = plt.figure(figsize=(10, 5)) 
+plt.plot(x,color='g')
+plt.stem(range(len(x)), x)
+plt.title("Señal (santiago)")  
+plt.xlabel("(n)") 
+plt.ylabel("x [n]") 
+plt.grid()  
+```
+
+<p align="center">
+    <img src="https://github.com/user-attachments/assets/bfa4f9b0-51ed-40c3-b052-ca6c8a513123" alt="imagen" width="450">
+</p>
+
+Este código genera dos gráficos para representar la respuesta al impulso h[n] y la señal de entrada x[n]. Para cada una, se crea una figura de 10x5 y se trazan dos representaciones: una línea verde (plt.plot()) y un gráfico de tipo stem (plt.stem()) para resaltar los valores discretos.
+
+---
+
+### 3. Grafico de la convolución
+```python
+fig = plt.figure(figsize=(10, 5)) 
+plt.plot(y,color='g')
+plt.title("Señal Resultante (santiago)")  
+plt.xlabel("(n)") 
+plt.ylabel("y [n]") 
+plt.grid() 
+plt.stem(range(len(y)), y)
+```
+
+<p align="center">
+    <img src="https://github.com/user-attachments/assets/df85b514-81c1-4ea5-bc03-17c59fa7ca0d" alt="imagen" width="450">
+</p>
+
+Este fragmento de código genera un gráfico de la señal resultante y[n], que es el resultado de la convolución entre x[n] y h[n]. Se traza la señal con una línea verde usando plt.plot(y, color='g'). Luego, se superpone un gráfico de tipo stem con plt.stem(range(len(y)), y), resaltando los valores discretos de la señal.
+
+---
+
+
+
+## Correlación
+
+### 1. Señal Cosenoidal
+```python
+Ts = 1.25e-3
+n = np.arange(0, 9) #valores enteros
+x1 = np.cos(2*np.pi*100*n*Ts)
+fig = plt.figure(figsize=(10, 5)) 
+plt.plot(n, x1, label="", color='black')
+plt.title("Señal Cosenoidal")  
+plt.xlabel("(n)") 
+plt.ylabel("x1 [nTs]") 
+plt.grid()
+plt.stem(range(len(x1)), x1)
+```
+
+<p align="center">
+    <img src="https://github.com/user-attachments/assets/ff850885-25c4-4218-9973-a7d8fdd429ea" alt="imagen" width="450">
 </p>
 
 
-La gráfica muestra la señal ECG en función del tiempo, donde se pueden ver claramente las ondas características (P, QRS y T) y cómo varía el voltaje. Se aprecia un patrón cíclico que indica una actividad cardíaca regular, aunque también se observa algo de ruido en la línea base, lo que podría deberse a interferencias en la toma de datos.
+Se genera y grafica una señal cosenoidal muestreada. Primero, se define un periodo de muestreo Ts = 1.25e-3, y luego se crea un arreglo n con valores enteros de 0 a 8 usando np.arange(0, 9). La función np.arange(inicio, fin) genera una secuencia de números desde inicio hasta fin-1 con un paso de 1 por defecto. En este caso, n representa los instantes de muestreo en el dominio discreto.
+
+A partir de n, se calcula la señal x1 como un coseno de 100 Hz evaluado en los instantes n * Ts. Para la visualización, se crea una figura de tamaño 10x5, donde plt.plot(n, x1, color='black') traza la señal con una línea negra, y plt.stem(range(len(x1)), x1) resalta los valores discretos.
+
 ---
 
-### 4. Estadísticos Descriptivos
+### 2. Señal Senoidal
+```python
+x2 = np.sin(2*np.pi*100*n*Ts)
+fig = plt.figure(figsize=(10, 5)) 
+plt.plot(n, x2, label="", color='black')
+plt.title("Señal Senoidal")  
+plt.xlabel("(n)") 
+plt.ylabel("x2 [nTs]") 
+plt.grid()
+plt.stem(range(len(x2)), x2)
+```
+<p align="center">
+    <img src="https://github.com/user-attachments/assets/1ad296f4-c07c-4391-b529-f078c5ddc9b6" alt="imagen" width="450">
+</p>
 
-#### 4.1. Cálculo Manual
-python
-def estadisticos_programados():
-    suma = 0
-    for v in señal:
-        suma += v    
-    media = suma / t
-    suma2 = sum((u - media)**2 for u in señal)
-    desvesta = (suma2 / (t - 1))**0.5
-    coeficiente = desvesta / media
-    print('media:', media)
-    print("desviacion estandar:", desvesta)
-    print('coeficente de variacion', coeficiente)
+Al igual que en la gráfica anterior, este código genera y visualiza una señal, pero en este caso es una señal senoidal en lugar de una cosenoidal. Se usa el mismo conjunto de valores n = np.arange(0, 9), generado con np.arange(), y se calcula x2 como un seno de 100 Hz evaluado en los instantes n * Ts.
 
-estadisticos_programados()
+---
 
-Se calculan los siguientes estadísticos:
-- *Media (μ):* Valor promedio de la señal.
-- *Desviación Estándar (σ):* Medida de la dispersión de los datos respecto a la media.
-- *Coeficiente de Variación (CV):* Relación entre desviación estándar y media, expresada en porcentaje.
+### 3. Correlación de las Señales y Representación Grafica
+```python
+correlacion = np.correlate(x1,x2,mode='full')
+print('Correlación =',correlacion)
+fig = plt.figure(figsize=(10, 5)) 
+plt.plot(correlacion, color='black')
+plt.stem(range(len(correlacion)), correlacion)
+plt.title("Correlación")  
+plt.xlabel("(n)") 
+plt.ylabel("R[n]") 
+plt.grid()
+```
+Se calcula y grafica la correlación cruzada entre las señales x1 y x2. La correlación mide la similitud entre dos señales a diferentes desplazamientos en el tiempo, lo que permite identificar patrones compartidos o desfases entre ellas.
+
+Primero, np.correlate(x1, x2, mode='full') computa la correlación cruzada, generando una nueva señal correlacion, cuya longitud es len(x1) + len(x2) - 1. Luego, el resultado se imprime en la consola.
 
 $$
-\mu = \frac{\sum x_i}{n}, \quad
-\sigma = \sqrt{\frac{\sum (x_i - \mu)^2}{n-1}}, \quad
-CV = \frac{\sigma}{\mu}
+\text{Correlación} = \begin{bmatrix}
+-2.44929360 \times 10^{-16} & -7.07106781 \times 10^{-1} & -1.50000000 & -1.41421356 \\
+-1.93438661 \times 10^{-16} & 2.12132034 \times 10^{0} & 3.50000000 & 2.82842712 \\
+8.81375476 \times 10^{-17} & -2.82842712 \times 10^{0} & -3.50000000 & -2.12132034 \\
+3.82856870 \times 10^{-16} & 1.41421356 \times 10^{0} & 1.50000000 & 7.07106781 \times 10^{-1} \\
+0.00000000 \times 10^{0}
+\end{bmatrix}
 $$
 
+<p align="center">
+    <img src="https://github.com/user-attachments/assets/2616db03-294f-474f-81ec-f89dc7211d0e" alt="imagen" width="450">
+</p>
 
-*Resultados:*
-- Media: -0.0124
-- Desviación estándar: 0.131
-- Coeficiente de variación: -10.557
+Para visualizar la correlación, se crea una figura de 10x5 donde plt.plot(correlacion, color='black') dibuja la señal con una línea negra, mientras que plt.stem(range(len(correlacion)), correlacion) resalta sus valores discretos. 
 
-*Interpretación:*
-La media cercana a cero indica una señal centrada, mientras que el coeficiente de variación muestra una variabilidad moderada.
-
-#### 4.2. Usando Funciones de NumPy
-python
-def estadisticos_Bibliotecas():
+---
+## Transformación (Señal Electromiografica)
+### 1. Caracterizacion en Función del Tiempo 
+#### 1.1. Estadisticos Descriptivos y frecuencia de muestreo
+```python
+def caracterizacion():
+    print()
+    print()
     media = np.mean(señal)
-    desvesta = np.std(señal, ddof=1)
-    coeficiente = desvesta / media
-    print('Media:', media)
-    print("Desviación estándar:", desvesta)
-    print('Coeficiente de variación:', coeficiente)
+    desvesta = np.std(señal)
+    print('Media de la señal:',np.round(media,6))
+    print('Desviación estándar:',np.round(desvesta,6))
+    print("Coeficiente de variación:",np.round((media/desvesta),6))
+    print('Frecuencia de muestreo:',fs,'Hz')
+    
+    fig = plt.figure(figsize=(8, 4))
+    sns.histplot(señal, kde=True, bins=30, color='black')
+    plt.hist(señal, bins=30, edgecolor='blue')
+    plt.title('Histograma de Datos')
+    plt.xlabel('datos')
+    plt.ylabel('Frecuencia')
 
-estadisticos_Bibliotecas()
+datos = wfdb.rdrecord('session1_participant1_gesture10_trial1') 
+t = 1500
+señal = datos.p_signal[:t, 0] 
+fs = datos.fs
+caracterizacion()
+```
+- Media de la señal: 0.000131
+- Desviación estándar: 0.071519
+- Coeficiente de variación: 0.001834
+- Histograma:
+<p align="center">
+    <img src="https://github.com/user-attachments/assets/f49fce8f-274a-47b9-bdb4-d45a9bab7513" alt="imagen" width="450">
+</p>
+- Frecuencia de muestreo: 2048 Hz
 
-Se obtienen los mismos resultados de manera más eficiente utilizando NumPy.
+#### 1.2. Grafica de Electromiografía
+```python
+fig = plt.figure(figsize=(10, 5)) 
+plt.plot(señal, color='m')
+plt.title("Electromiografía [EMG]")  
+plt.xlabel("muestras[n]") 
+plt.ylabel("voltaje [mv]") 
+plt.grid()
+```
+<p align="center">
+    <img src="https://github.com/user-attachments/assets/a7661d06-f365-4edb-9084-1bd64b07475b" alt="imagen" width="450">
+</p>
 
-*Resultados:*
-- Media: -0.012
-- Desviación estándar: 0.131
-- Coeficiente de variación: -10.554
 
----
-En esta sección se calculan estadísticas básicas de la señal de dos formas: de manera manual y usando NumPy. Ambas aproximaciones generan resultados muy similares: una media cercana a cero (-0.0124 o -0.012) lo que coincide con el histograma que revela una concentración de valores alrededor de este punto ,y una desviación estándar de 0.131, lo que indica que la señal está centrada y presenta una dispersión moderada. El coeficiente de variación, cercano a 10.55, lo que refleja una variabilidad relativa en la señal.
-### 5. Función de Probabilidad
-python
-def calcular_funcion_probabilidad(senal):
-    valores_unicos = np.unique(señal)
-    probabilidades = {}
-    for valor in valores_unicos:
-        probabilidades[valor] = np.sum(señal == valor) / len(señal)
-    for valor, prob in probabilidades.items():
-        print(f"Valor: {valor:.5f}, Probabilidad: {prob:.5f}")
 
-calcular_funcion_probabilidad(señal)
+### 2. Descripción la señal en cuanto a su clasificación 
 
-$$
-P(v) = \frac{\text{Frecuencia Absoluta de } v}{\text{Total de Valores}}
-$$
+### 3. Tranformada de Fourier
+#### 3.1. Grafica de la transformada de fourier
+```python
+N = len(señal)
+frecuencias = np.fft.fftfreq(N, 1/fs)
+transformada = np.fft.fft(señal) / N
+magnitud = (2 * np.abs(transformada[:N//2]))**2
 
-Se calcula la probabilidad de ocurrencia de cada valor único en la señal. Esto ayuda a comprender cómo se distribuyen los valores específicos.
+plt.figure(figsize=(10, 5))
+plt.plot(frecuencias[:N//2], np.abs(transformada[:N//2]), color='black')
+plt.title("Transformada de Fourier de la Señal")
+plt.xlabel("Frecuencia (Hz)")
+plt.ylabel("Magnitud")
+plt.grid()
+```
+<p align="center">
+    <img src="https://github.com/user-attachments/assets/1cc48cf6-16d7-4152-945e-5f280ec6a2b6" alt="imagen" width="450">
+</p>
 
-*Ejemplo de Resultados:*
-- Valor: -0.28000, Probabilidad: 0.00050
-- Valor: 0.00000, Probabilidad: 0.01650
 
-*Análisis:*
-La mayoría de los valores tienen baja probabilidad individual, lo que refleja la variabilidad natural de la señal.
+#### 3.2. Grafica de la densidad espectral
+```python
+plt.figure(figsize=(10, 5))
+plt.plot(frecuencias[:N//2], magnitud, color='black')
+plt.xlabel('Frecuencia (Hz)')
+plt.ylabel('Potencia')
+plt.title('Densidad espectral de la señal')
+plt.grid()
 
----
+plt.show()
+```
+<p align="center">
+    <img src="https://github.com/user-attachments/assets/9a883eae-0c13-455a-9441-be09de4f1103" alt="imagen" width="450">
+</p>
 
-### 6. Ruido Añadido y Cálculo de SNR
-#### 6.1. Ruido Gaussiano
-python
-ruido = np.random.normal(0, 0.1, t)
-señal_ruidosa = señal + ruido
 
-El ruido gaussiano es un tipo de ruido aleatorio cuyas variaciones siguen una distribución normal. Se define por su media (0 en este caso) y su desviación estándar (0.1, que controla su intensidad). Es común en señales fisiológicas debido a la electrónica del sistema de adquisición y otras fuentes de interferencia aleatoria.
-
-#### 6.2. Ruido de Impulso
-python
-prob_impulso = 0.08
-impulsos = np.random.choice([0, 1], size=len(señal), p=[1-prob_impulso, prob_impulso])
-amplitud_impulso = np.random.choice([-1, 1], size=len(señal)) * 0.2
-ruido2 = impulsos * amplitud_impulso
-
-Este ruido se caracteriza por picos abruptos y esporádicos en la señal, generados aquí con una probabilidad del 8% (prob_impulso = 0.08). La función np.random.choice determina en qué puntos aparecen los impulsos (1 o 0), y la amplitud se asigna aleatoriamente con valores de ±0.2. Este ruido suele deberse a interferencias externas o fallos en la transmisión de datos.
-
-#### 6.3. Ruido Tipo Artefacto
-python
-prob_imp = 0.15
-impul = np.random.choice([0, 1], size=len(señal), p=[1-prob_imp, prob_imp])
-amplitud = np.random.choice([-1, 1], size=len(señal)) * 0.2
-ruido3 = impul * amplitud
-
-Este ruido representa alteraciones no deseadas en la señal causadas por errores en la adquisición, como movimientos del paciente o fallos en los electrodos. Es similar al ruido de impulso, pero con una mayor probabilidad de ocurrencia (prob_imp = 0.15). Se genera con la misma lógica de np.random.choice, agregando perturbaciones aleatorias.
