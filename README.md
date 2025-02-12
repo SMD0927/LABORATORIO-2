@@ -179,6 +179,8 @@ $$
 
 Para visualizar la correlación, se crea una figura de 10x5 donde plt.plot(correlacion, color='black') dibuja la señal con una línea negra, mientras que plt.stem(range(len(correlacion)), correlacion) resalta sus valores discretos. 
 
+La gráfica de correlación muestra cómo varía la similitud entre la señal cosenoidal y la senoidal a medida que una de ellas se desplaza con respecto a la otra. Dado que el coseno y el seno tienen una relación de desfase de 90° (π/2 radianes), su correlación debe reflejar este comportamiento. En la gráfica, se observa que la correlación alcanza su valor máximo en un determinado desplazamiento positivo, lo que indica que, al mover una señal cierto número de muestras hacia la derecha, ambas señales logran su mayor alineación. De manera similar, cuando el desplazamiento es negativo, la correlación toma valores negativos, lo que sugiere que en esas posiciones las señales están en oposición de fase. Además, en ciertos desplazamientos, la correlación se acerca a cero, lo que significa que en esas posiciones las señales no tienen una relación significativa.
+
 ---
 ## Transformación (Señal Electromiografica)
 ### 1. Caracterizacion en Función del Tiempo 
