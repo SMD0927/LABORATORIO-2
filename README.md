@@ -97,6 +97,8 @@ plt.stem(range(len(y)), y)
 
 Este fragmento de código genera un gráfico de la señal resultante y[n], que es el resultado de la convolución entre x[n] y h[n]. Se traza la señal con una línea verde usando plt.plot(y, color='g'). Luego, se superpone un gráfico de tipo stem con plt.stem(range(len(y)), y), resaltando los valores discretos de la señal.
 
+Matemáticamente, la convolución se obtiene desplazando, invirtiendo y superponiendo ℎ[𝑛] en función de cada valor de x[n], lo que se traduce en una acumulación progresiva de valores en la salida. En la gráfica se observa un crecimiento inicial a medida que los valores de x[n] y h[n] comienzan a superponerse, alcanzando un máximo cuando la mayor cantidad de términos significativos contribuyen a la suma. Posteriormente, la señal disminuye cuando la superposición entre ambas funciones se reduce. Este comportamiento es característico de la operación de convolución y confirma que el sistema está respondiendo de manera esperada a la señal de entrada.
+
 ---
 
 
