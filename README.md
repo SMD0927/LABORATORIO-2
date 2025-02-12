@@ -14,7 +14,6 @@ Instalar dependencias:
 pip install wfdb numpy matplotlib seaborn
 ##Introducción
 Este proyecto presenta ejemplos prácticos de procesamiento digital de señales mediante operaciones fundamentales como la convolución, la correlación y la transformada de Fourier, además del análisis de una señal electromiográfica (EMG) en funcion de la frecuencia.
-
 -----
 
 ## Convolución
@@ -33,8 +32,7 @@ Donde:
 - \(M\) es la longitud de la señal de entrada.
 
 ### 1. Convolución entre la señal x[n] y del sistema h[n]
-
-python
+```python
 h = [5,6,0,0,7,7,5]
 x = [1,0,1,4,6,6,0,7,0,8]
 y = np.convolve(x,h,mode='full')
@@ -59,13 +57,13 @@ y[n] = \begin{bmatrix}
 5 & 6 & 5 & 26 & 61 & 73 & 48 & 70 & 117 & 144 & 120 & 79 & 49 & 91 & 56 & 40
 \end{bmatrix}
 $$
-
+```
 Este código en Python calcula la convolución discreta entre dos señales utilizando la función np.convolve() de NumPy. Primero, se definen dos listas, h y x, que representan la respuesta al impulso de un sistema y una señal de entrada, respectivamente. Luego, se aplica la convolución entre estas dos señales usando np.convolve(x, h, mode='full'), lo que genera una nueva señal y cuya longitud es la suma de las longitudes de x y h menos uno. La convolución es una operación fundamental en procesamiento de señales, ya que permite analizar cómo una señal se ve afectada por un sistema. Finalmente, el código imprime las señales h, x y y para visualizar los datos y el resultado de la convolución.
 
 ---
 
 ### 2. Grafico de la señal x[n] y del sistema h[n]
-python
+```python
 fig = plt.figure(figsize=(10, 5)) 
 plt.plot(h,color='g')
 plt.stem(range(len(h)), h)
@@ -73,13 +71,13 @@ plt.title("Sistema (santiago)")
 plt.xlabel("(n)") 
 plt.ylabel("h [n]") 
 plt.grid()
-
+```
 
 <p align="center">
     <img src="https://github.com/user-attachments/assets/6f0bcd91-09fb-45d7-a90c-f3ebca191154" alt="imagen" width="450">
 </p>
 
-python
+```python
 fig = plt.figure(figsize=(10, 5)) 
 plt.plot(x,color='g')
 plt.stem(range(len(x)), x)
@@ -87,7 +85,7 @@ plt.title("Señal (santiago)")
 plt.xlabel("(n)") 
 plt.ylabel("x [n]") 
 plt.grid()  
-
+```
 
 <p align="center">
     <img src="https://github.com/user-attachments/assets/bfa4f9b0-51ed-40c3-b052-ca6c8a513123" alt="imagen" width="450">
@@ -98,7 +96,7 @@ Este código genera dos gráficos para representar la respuesta al impulso h[n] 
 ---
 
 ### 3. Grafico de la convolución
-python
+```python
 fig = plt.figure(figsize=(10, 5)) 
 plt.plot(y,color='g')
 plt.title("Señal Resultante (santiago)")  
@@ -106,7 +104,7 @@ plt.xlabel("(n)")
 plt.ylabel("y [n]") 
 plt.grid() 
 plt.stem(range(len(y)), y)
-
+```
 
 <p align="center">
     <img src="https://github.com/user-attachments/assets/df85b514-81c1-4ea5-bc03-17c59fa7ca0d" alt="imagen" width="450">
@@ -131,7 +129,7 @@ Donde:
 
 
 ### 1. Señal Cosenoidal
-python
+```python
 Ts = 1.25e-3
 n = np.arange(0, 9) #valores enteros
 x1 = np.cos(2*np.pi*100*n*Ts)
@@ -142,7 +140,7 @@ plt.xlabel("(n)")
 plt.ylabel("x1 [nTs]") 
 plt.grid()
 plt.stem(range(len(x1)), x1)
-
+```
 
 <p align="center">
     <img src="https://github.com/user-attachments/assets/ff850885-25c4-4218-9973-a7d8fdd429ea" alt="imagen" width="450">
@@ -156,7 +154,7 @@ A partir de n, se calcula la señal x1 como un coseno de 100 Hz evaluado en los 
 ---
 
 ### 2. Señal Senoidal
-python
+```python
 x2 = np.sin(2*np.pi*100*n*Ts)
 fig = plt.figure(figsize=(10, 5)) 
 plt.plot(n, x2, label="", color='black')
@@ -165,7 +163,7 @@ plt.xlabel("(n)")
 plt.ylabel("x2 [nTs]") 
 plt.grid()
 plt.stem(range(len(x2)), x2)
-
+```
 <p align="center">
     <img src="https://github.com/user-attachments/assets/1ad296f4-c07c-4391-b529-f078c5ddc9b6" alt="imagen" width="450">
 </p>
@@ -175,7 +173,7 @@ Al igual que en la gráfica anterior, este código genera y visualiza una señal
 ---
 
 ### 3. Correlación de las Señales y Representación Grafica
-python
+```python
 correlacion = np.correlate(x1,x2,mode='full')
 print('Correlación =',correlacion)
 fig = plt.figure(figsize=(10, 5)) 
@@ -185,7 +183,7 @@ plt.title("Correlación")
 plt.xlabel("(n)") 
 plt.ylabel("R[n]") 
 plt.grid()
-
+```
 Se calcula y grafica la correlación cruzada entre las señales x1 y x2. La correlación mide la similitud entre dos señales a diferentes desplazamientos en el tiempo, lo que permite identificar patrones compartidos o desfases entre ellas.
 
 Primero, np.correlate(x1, x2, mode='full') computa la correlación cruzada, generando una nueva señal correlacion, cuya longitud es len(x1) + len(x2) - 1. Luego, el resultado se imprime en la consola.
@@ -209,16 +207,16 @@ Para visualizar la correlación, se crea una figura de 10x5 donde plt.plot(corre
 ---
 ## Transformación (Señal Electromiografica)
 ### 1. Caracterizacion en Función del Tiempo 
-python
+```python
 datos = wfdb.rdrecord('session1_participant1_gesture10_trial1') 
 t = 1500
 señal = datos.p_signal[:t, 0] 
 fs = datos.fs
-
+```
 Se carga una señal de electromiografía (EMG) y se extraen los primeros 1500 puntos.
 
 #### 1.1. Estadisticos Descriptivos y frecuencia de muestreo
-python
+```python
 def caracterizacion():
     print()
     print()
@@ -237,7 +235,7 @@ def caracterizacion():
     plt.ylabel('Frecuencia')
 
 caracterizacion()
-
+```
 - Media de la señal: 0.000131
 - Desviación estándar: 0.071519
 - Coeficiente de variación: 0.001834
@@ -248,14 +246,14 @@ caracterizacion()
 - Frecuencia de muestreo: 2048 Hz
 
 #### 1.2. Grafica de Electromiografía
-python
+```python
 fig = plt.figure(figsize=(10, 5)) 
 plt.plot(señal, color='m')
 plt.title("Electromiografía [EMG]")  
 plt.xlabel("muestras[n]") 
 plt.ylabel("voltaje [mv]") 
 plt.grid()
-
+```
 <p align="center">
     <img src="https://github.com/user-attachments/assets/a7661d06-f365-4edb-9084-1bd64b07475b" alt="imagen" width="450">
 </p>
@@ -286,7 +284,7 @@ La DFT utiliza una suma ponderada de las muestras de la señal con bases exponen
 
 #### 3.1. Grafica de la transformada de fourier
 El siguiente código muestra cómo calcular y graficar la transformada de Fourier de una señal:
-python
+```python
 N = len(señal)
 frecuencias = np.fft.fftfreq(N, 1/fs)
 transformada = np.fft.fft(señal) / N
@@ -298,7 +296,7 @@ plt.title("Transformada de Fourier de la Señal")
 plt.xlabel("Frecuencia (Hz)")
 plt.ylabel("Magnitud")
 plt.grid()
-
+```
 - np.fft.fft: Calcula la transformada de Fourier de la señal.
 - np.fft.fftfreq: Devuelve las frecuencias correspondientes a cada componente de la transformada.
 - N//2: Se utiliza para considerar únicamente las frecuencias positivas.
@@ -313,7 +311,7 @@ Esta gráfica muestra las frecuencias presentes en la señal y su magnitud asoci
 
 #### 3.2. Grafica de la densidad espectral
 En la práctica, para señales discretas y de duración finita, la DEP se estima utilizando la transformada de Fourier discreta (DFT). Al calcular la DFT de una señal y normalizar adecuadamente, se obtiene una estimación de su densidad espectral de potencia. Esta estimación permite identificar las frecuencias predominantes y analizar cómo se distribuye la energía de la señal en el dominio de la frecuencia.
-python
+```python
 plt.figure(figsize=(10, 5))
 plt.plot(frecuencias[:N//2], magnitud, color='black')
 plt.xlabel('Frecuencia (Hz)')
@@ -322,14 +320,13 @@ plt.title('Densidad espectral de la señal')
 plt.grid()
 
 plt.show()
-
+```
 
 <p align="center">
     <img src="https://github.com/user-attachments/assets/9a883eae-0c13-455a-9441-be09de4f1103" alt="imagen" width="450">
 </p>
 - La densidad espectral muestra cómo la potencia de la señal se distribuye entre las diferentes frecuencias.
 - magnitud: Representa la potencia de cada frecuencia, calculada como el cuadrado de la magnitud de la transformada de Fourier.
-
 Ambas gráficas son fundamentales para comprender el comportamiento de la señal en el dominio de la frecuencia. La primera da información sobre las frecuencias presentes, mientras que la segunda muestra cómo se distribuye la energía de la señal en esas frecuencias.
 
 ----
