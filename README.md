@@ -241,12 +241,13 @@ caracterizacion()
 - Media de la señal: 0.000131
 - Desviación estándar: 0.071519
 - Coeficiente de variación: 0.001834
-- Histograma:
+- Frecuencia de muestreo: 2048 Hz
 <p align="center">
     <img src="https://github.com/user-attachments/assets/d64b9102-821a-4754-a102-2a5977baab0c" alt="imagen" width="450">
 </p>
-- Frecuencia de muestreo: 2048 Hz
 
+- Histograma:El histograma resultante tiene una distribución que se asemeja a una campana de Gauss, lo cual es un fuerte indicativo de una distribución normal en los datos. Esto significa que la mayoría de los valores están concentrados alrededor del promedio, mientras que las frecuencias disminuyen gradualmente hacia ambos extremos.
+  
 #### 1.2. Grafica de Electromiografía
 ```python
 fig = plt.figure(figsize=(10, 5)) 
