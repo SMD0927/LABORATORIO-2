@@ -331,6 +331,6 @@ plt.show()
 Ambas gráficas son fundamentales para comprender el comportamiento de la señal en el dominio de la frecuencia. La primera da información sobre las frecuencias presentes, mientras que la segunda muestra cómo se distribuye la energía de la señal en esas frecuencias.
 
 ----
-##Conclusión
+## Conclusión
 
 Este laboratorio demuestra el uso de Python para el procesamiento digital de señales, aplicando herramientas matemáticas fundamentales como la convolución, la correlación y la transformada de Fourier para analizar una señal electromiográfica.
