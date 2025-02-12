@@ -75,7 +75,7 @@ plt.grid()
 ```
 
 <p align="center">
-    <img src="https://github.com/user-attachments/assets/6f0bcd91-09fb-45d7-a90c-f3ebca191154" alt="imagen" width="450">
+    <img src="https://github.com/user-attachments/assets/b400a6c8-f58f-4757-a74c-ed36a19d3d59" alt="imagen" width="450">
 </p>
 
 ```python
