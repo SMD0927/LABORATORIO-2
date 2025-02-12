@@ -1,9 +1,9 @@
 # Convolución, correlación y transformación 
  LABORATORIO - 2 PROCESAMIENTO DIGITAL DE SEÑALES 
- 
+
 
 ## Requisitos
-- *Python 3.9*
+- Python 3.9
 - Bibliotecas necesarias:
   - wfdb
   - numpy
@@ -11,20 +11,36 @@
   - seaborn
 
 Instalar dependencias:
-`pip install wfdb numpy matplotlib seaborn`
-
+pip install wfdb numpy matplotlib seaborn
+##Introducción
+Este proyecto presenta ejemplos prácticos de procesamiento digital de señales mediante operaciones fundamentales como la convolución, la correlación y la transformada de Fourier, además del análisis de una señal electromiográfica (EMG) en funcion de la frecuencia.
+-----
 
 ## Convolución
+La convolución es una operación que permite obtener la respuesta de un sistema LTI (lineal e invariante en el tiempo) a partir de su respuesta al impulso y de una señal de entrada. La salida se obtiene como la suma ponderada de la señal de entrada desplazada y multiplicada por la respuesta del sistema.
+### Fórmula de la convolución discreta:
+
+$$
+y[n] = \sum_{k=0}^{M-1} x[k] h[n-k]
+$$
+
+Donde:
+
+- \(y[n]\) es la señal de salida.
+- \(x[k]\) es la señal de entrada.
+- \(h[n-k]\) es la respuesta al impulso del sistema desplazada en el tiempo.
+- \(M\) es la longitud de la señal de entrada.
 
 ### 1. Convolución entre la señal x[n] y del sistema h[n]
-```python
+
+python
 h = [5,6,0,0,7,7,5]
 x = [1,0,1,4,6,6,0,7,0,8]
 y = np.convolve(x,h,mode='full')
 print('h[n] =', h)
 print('x[n] =',x)
 print('y[n] =',y)
-```
+
 $$
 h[n] = \begin{bmatrix}
 5 & 6 & 0 & 0 & 7 & 7 & 5
@@ -48,7 +64,7 @@ Este código en Python calcula la convolución discreta entre dos señales utili
 ---
 
 ### 2. Grafico de la señal x[n] y del sistema h[n]
-```python
+python
 fig = plt.figure(figsize=(10, 5)) 
 plt.plot(h,color='g')
 plt.stem(range(len(h)), h)
@@ -56,13 +72,13 @@ plt.title("Sistema (santiago)")
 plt.xlabel("(n)") 
 plt.ylabel("h [n]") 
 plt.grid()
-```
+
 
 <p align="center">
     <img src="https://github.com/user-attachments/assets/6f0bcd91-09fb-45d7-a90c-f3ebca191154" alt="imagen" width="450">
 </p>
 
-```python
+python
 fig = plt.figure(figsize=(10, 5)) 
 plt.plot(x,color='g')
 plt.stem(range(len(x)), x)
@@ -70,7 +86,7 @@ plt.title("Señal (santiago)")
 plt.xlabel("(n)") 
 plt.ylabel("x [n]") 
 plt.grid()  
-```
+
 
 <p align="center">
     <img src="https://github.com/user-attachments/assets/bfa4f9b0-51ed-40c3-b052-ca6c8a513123" alt="imagen" width="450">
@@ -81,7 +97,7 @@ Este código genera dos gráficos para representar la respuesta al impulso h[n] 
 ---
 
 ### 3. Grafico de la convolución
-```python
+python
 fig = plt.figure(figsize=(10, 5)) 
 plt.plot(y,color='g')
 plt.title("Señal Resultante (santiago)")  
@@ -89,7 +105,7 @@ plt.xlabel("(n)")
 plt.ylabel("y [n]") 
 plt.grid() 
 plt.stem(range(len(y)), y)
-```
+
 
 <p align="center">
     <img src="https://github.com/user-attachments/assets/df85b514-81c1-4ea5-bc03-17c59fa7ca0d" alt="imagen" width="450">
@@ -97,16 +113,24 @@ plt.stem(range(len(y)), y)
 
 Este fragmento de código genera un gráfico de la señal resultante y[n], que es el resultado de la convolución entre x[n] y h[n]. Se traza la señal con una línea verde usando plt.plot(y, color='g'). Luego, se superpone un gráfico de tipo stem con plt.stem(range(len(y)), y), resaltando los valores discretos de la señal.
 
-Matemáticamente, la convolución se obtiene desplazando, invirtiendo y superponiendo ℎ[𝑛] en función de cada valor de x[n], lo que se traduce en una acumulación progresiva de valores en la salida. En la gráfica se observa un crecimiento inicial a medida que los valores de x[n] y h[n] comienzan a superponerse, alcanzando un máximo cuando la mayor cantidad de términos significativos contribuyen a la suma. Posteriormente, la señal disminuye cuando la superposición entre ambas funciones se reduce. Este comportamiento es característico de la operación de convolución y confirma que el sistema está respondiendo de manera esperada a la señal de entrada.
-
 ---
 
 
-
 ## Correlación
+La correlación mide la similitud entre dos señales en diferentes desplazamientos en el tiempo.
+### Fórmula de la correlación cruzada:
+
+$$
+R_{xy}[n] = \sum_{k=-\infty}^{\infty} x[k] y[k+n]
+$$
+
+Donde:
+- \(R_{xy}[n]\) es la correlación cruzada entre \(x\) y \(y\).
+- \(x[k]\) y \(y[k+n]\) representan las señales en diferentes desplazamientos temporales.
+
 
 ### 1. Señal Cosenoidal
-```python
+python
 Ts = 1.25e-3
 n = np.arange(0, 9) #valores enteros
 x1 = np.cos(2*np.pi*100*n*Ts)
@@ -117,7 +141,7 @@ plt.xlabel("(n)")
 plt.ylabel("x1 [nTs]") 
 plt.grid()
 plt.stem(range(len(x1)), x1)
-```
+
 
 <p align="center">
     <img src="https://github.com/user-attachments/assets/ff850885-25c4-4218-9973-a7d8fdd429ea" alt="imagen" width="450">
@@ -131,7 +155,7 @@ A partir de n, se calcula la señal x1 como un coseno de 100 Hz evaluado en los 
 ---
 
 ### 2. Señal Senoidal
-```python
+python
 x2 = np.sin(2*np.pi*100*n*Ts)
 fig = plt.figure(figsize=(10, 5)) 
 plt.plot(n, x2, label="", color='black')
@@ -140,7 +164,7 @@ plt.xlabel("(n)")
 plt.ylabel("x2 [nTs]") 
 plt.grid()
 plt.stem(range(len(x2)), x2)
-```
+
 <p align="center">
     <img src="https://github.com/user-attachments/assets/1ad296f4-c07c-4391-b529-f078c5ddc9b6" alt="imagen" width="450">
 </p>
@@ -150,7 +174,7 @@ Al igual que en la gráfica anterior, este código genera y visualiza una señal
 ---
 
 ### 3. Correlación de las Señales y Representación Grafica
-```python
+python
 correlacion = np.correlate(x1,x2,mode='full')
 print('Correlación =',correlacion)
 fig = plt.figure(figsize=(10, 5)) 
@@ -160,7 +184,7 @@ plt.title("Correlación")
 plt.xlabel("(n)") 
 plt.ylabel("R[n]") 
 plt.grid()
-```
+
 Se calcula y grafica la correlación cruzada entre las señales x1 y x2. La correlación mide la similitud entre dos señales a diferentes desplazamientos en el tiempo, lo que permite identificar patrones compartidos o desfases entre ellas.
 
 Primero, np.correlate(x1, x2, mode='full') computa la correlación cruzada, generando una nueva señal correlacion, cuya longitud es len(x1) + len(x2) - 1. Luego, el resultado se imprime en la consola.
@@ -181,13 +205,19 @@ $$
 
 Para visualizar la correlación, se crea una figura de 10x5 donde plt.plot(correlacion, color='black') dibuja la señal con una línea negra, mientras que plt.stem(range(len(correlacion)), correlacion) resalta sus valores discretos. 
 
-La gráfica de correlación muestra cómo varía la similitud entre la señal cosenoidal y la senoidal a medida que una de ellas se desplaza con respecto a la otra. Dado que el coseno y el seno tienen una relación de desfase de 90° (π/2 radianes), su correlación debe reflejar este comportamiento. En la gráfica, se observa que la correlación alcanza su valor máximo en un determinado desplazamiento positivo, lo que indica que, al mover una señal cierto número de muestras hacia la derecha, ambas señales logran su mayor alineación. De manera similar, cuando el desplazamiento es negativo, la correlación toma valores negativos, lo que sugiere que en esas posiciones las señales están en oposición de fase. Además, en ciertos desplazamientos, la correlación se acerca a cero, lo que significa que en esas posiciones las señales no tienen una relación significativa.
-
 ---
 ## Transformación (Señal Electromiografica)
 ### 1. Caracterizacion en Función del Tiempo 
+python
+datos = wfdb.rdrecord('session1_participant1_gesture10_trial1') 
+t = 1500
+señal = datos.p_signal[:t, 0] 
+fs = datos.fs
+
+Se carga una señal de electromiografía (EMG) y se extraen los primeros 1500 puntos.
+
 #### 1.1. Estadisticos Descriptivos y frecuencia de muestreo
-```python
+python
 def caracterizacion():
     print()
     print()
@@ -205,12 +235,8 @@ def caracterizacion():
     plt.xlabel('datos')
     plt.ylabel('Frecuencia')
 
-datos = wfdb.rdrecord('session1_participant1_gesture10_trial1') 
-t = 1500
-señal = datos.p_signal[:t, 0] 
-fs = datos.fs
 caracterizacion()
-```
+
 - Media de la señal: 0.000131
 - Desviación estándar: 0.071519
 - Coeficiente de variación: 0.001834
@@ -221,14 +247,14 @@ caracterizacion()
 - Frecuencia de muestreo: 2048 Hz
 
 #### 1.2. Grafica de Electromiografía
-```python
+python
 fig = plt.figure(figsize=(10, 5)) 
 plt.plot(señal, color='m')
 plt.title("Electromiografía [EMG]")  
 plt.xlabel("muestras[n]") 
 plt.ylabel("voltaje [mv]") 
 plt.grid()
-```
+
 <p align="center">
     <img src="https://github.com/user-attachments/assets/a7661d06-f365-4edb-9084-1bd64b07475b" alt="imagen" width="450">
 </p>
@@ -236,11 +262,30 @@ plt.grid()
 
 
 ### 2. Descripción la señal en cuanto a su clasificación 
-descripciiiion.....
+
+La señal electromiográfica (EMG) es un registro de la actividad eléctrica generada por los músculos esqueléticos. Se clasifica como una señal biomédica no estacionaria y altamente variable, influenciada por la activación muscular, la fatiga y factores externos como la calidad de los electrodos y el ruido ambiental. En términos generales, la EMG se puede analizar en el dominio del tiempo y la frecuencia para extraer características que ayuden en aplicaciones como el control de prótesis, diagnóstico de trastornos neuromusculares y análisis del rendimiento muscular en deportes.
 
 ### 3. Tranformada de Fourier
+La transformada de Fourier permite convertir una señal del dominio del tiempo al dominio de la frecuencia.
+
+### Fórmula de la Transformada de Fourier Discreta (DFT):
+
+$$
+X[k] = \sum_{n=0}^{N-1} x[n] e^{-j 2 \pi k n / N}
+$$
+
+Donde:
+
+- \(X[k]\) es la representación en frecuencia de la señal.
+- \(x[n]\) es la señal original en el dominio del tiempo.
+- \(N\) es el número total de muestras.
+- \(e^{-j 2 \pi k n / N}\) representa la base exponencial compleja.
+
+La DFT utiliza una suma ponderada de las muestras de la señal con bases exponenciales complejas para transformar la señal desde el tiempo hacia el dominio de la frecuencia.
+
 #### 3.1. Grafica de la transformada de fourier
-```python
+El siguiente código muestra cómo calcular y graficar la transformada de Fourier de una señal:
+python
 N = len(señal)
 frecuencias = np.fft.fftfreq(N, 1/fs)
 transformada = np.fft.fft(señal) / N
@@ -252,14 +297,22 @@ plt.title("Transformada de Fourier de la Señal")
 plt.xlabel("Frecuencia (Hz)")
 plt.ylabel("Magnitud")
 plt.grid()
-```
+
+- np.fft.fft: Calcula la transformada de Fourier de la señal.
+- np.fft.fftfreq: Devuelve las frecuencias correspondientes a cada componente de la transformada.
+- N//2: Se utiliza para considerar únicamente las frecuencias positivas.
+- plt.plot: Genera una gráfica de la magnitud de la transformada.
+
+Esta gráfica muestra las frecuencias presentes en la señal y su magnitud asociada.
+
 <p align="center">
     <img src="https://github.com/user-attachments/assets/1cc48cf6-16d7-4152-945e-5f280ec6a2b6" alt="imagen" width="450">
 </p>
 
 
 #### 3.2. Grafica de la densidad espectral
-```python
+En la práctica, para señales discretas y de duración finita, la DEP se estima utilizando la transformada de Fourier discreta (DFT). Al calcular la DFT de una señal y normalizar adecuadamente, se obtiene una estimación de su densidad espectral de potencia. Esta estimación permite identificar las frecuencias predominantes y analizar cómo se distribuye la energía de la señal en el dominio de la frecuencia.
+python
 plt.figure(figsize=(10, 5))
 plt.plot(frecuencias[:N//2], magnitud, color='black')
 plt.xlabel('Frecuencia (Hz)')
@@ -268,9 +321,16 @@ plt.title('Densidad espectral de la señal')
 plt.grid()
 
 plt.show()
-```
+
+
 <p align="center">
     <img src="https://github.com/user-attachments/assets/9a883eae-0c13-455a-9441-be09de4f1103" alt="imagen" width="450">
 </p>
+- La densidad espectral muestra cómo la potencia de la señal se distribuye entre las diferentes frecuencias.
+- magnitud: Representa la potencia de cada frecuencia, calculada como el cuadrado de la magnitud de la transformada de Fourier.
 
+Ambas gráficas son fundamentales para comprender el comportamiento de la señal en el dominio de la frecuencia. La primera da información sobre las frecuencias presentes, mientras que la segunda muestra cómo se distribuye la energía de la señal en esas frecuencias.
+----
+##Conclusión
 
+Este laboratorio demuestra el uso de Python para el procesamiento digital de señales, aplicando herramientas matemáticas fundamentales como la convolución, la correlación y la transformada de Fourier para analizar una señal electromiográfica.
