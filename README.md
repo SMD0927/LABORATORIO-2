@@ -11,14 +11,18 @@
   - seaborn
 
 Instalar dependencias:
+```python
 pip install wfdb numpy matplotlib seaborn
-##Introducción
-Este proyecto presenta ejemplos prácticos de procesamiento digital de señales mediante operaciones fundamentales como la convolución, la correlación y la transformada de Fourier, además del análisis de una señal electromiográfica (EMG) en funcion de la frecuencia.
-
+```
+----
+## Introducción
+En este laboratorio  se observo cómo se comportan las señales tanto en el tiempo como en la frecuencia. Lo haremos aplicando tres técnicas fundamentales: la convolución, la correlación y la transformada de Fourier. Además del análisis de una señal electromiografía (EMG).
 -----
 
 ## Convolución
-La convolución es una operación que permite obtener la respuesta de un sistema LTI (lineal e invariante en el tiempo) a partir de su respuesta al impulso y de una señal de entrada. La salida se obtiene como la suma ponderada de la señal de entrada desplazada y multiplicada por la respuesta del sistema.
+La convolución es una operación matemática que combina dos funciones para describir la superposición entre ambas. La convolución toma dos funciones, “desliza” una sobre la otra, multiplica los valores de las funciones en todos los puntos de superposición, y suma los productos para crear una nueva función. Este proceso crea una nueva función que representa cómo interactúan las dos funciones originales entre sí.
+La convolución se utiliza en el procesamiento digital de señales para estudiar y diseñar sistemas lineales de tiempo invariante (LTI), como los filtros digitales.
+La señal de salida de un sistema LTI,y[n], es la convolución de la señal de entrada x[n] y la respuesta al impulso h[n] del sistema.[1]
 ### Fórmula de la convolución discreta:
 
 $$
@@ -119,7 +123,7 @@ Este fragmento de código genera un gráfico de la señal resultante y[n], que e
 
 
 ## Correlación
-La correlación mide la similitud entre dos señales en diferentes desplazamientos en el tiempo.
+La correlación en señales mide estadísticamente cómo dos señales varían de manera conjunta, evaluando su similitud o relación lineal. Es clave en el procesamiento de señales, ya que permite analizar sincronización, patrones y dependencias entre flujos de datos o formas de onda. Prácticamente, se usa para detectar similitudes, identificar patrones, filtrar ruido y extraer información relevante.[2]
 ### Fórmula de la correlación cruzada:
 
 $$
@@ -152,6 +156,7 @@ plt.stem(range(len(x1)), x1)
 Se genera y grafica una señal cosenoidal muestreada. Primero, se define un periodo de muestreo Ts = 1.25e-3, y luego se crea un arreglo n con valores enteros de 0 a 8 usando np.arange(0, 9). La función np.arange(inicio, fin) genera una secuencia de números desde inicio hasta fin-1 con un paso de 1 por defecto. En este caso, n representa los instantes de muestreo en el dominio discreto.
 
 A partir de n, se calcula la señal x1 como un coseno de 100 Hz evaluado en los instantes n * Ts. Para la visualización, se crea una figura de tamaño 10x5, donde plt.plot(n, x1, color='black') traza la señal con una línea negra, y plt.stem(range(len(x1)), x1) resalta los valores discretos.
+
 
 ---
 
@@ -218,6 +223,10 @@ fs = datos.fs
 Se carga una señal de electromiografía (EMG) y se extraen los primeros 1500 puntos.
 
 #### 1.1. Estadisticos Descriptivos y frecuencia de muestreo
+Se calculan los siguientes estadísticos:
+- *Media (μ):* Valor promedio de la señal.
+- *Desviación Estándar (σ):* Medida de la dispersión de los datos respecto a la media.
+- *Coeficiente de Variación (CV):* Relación entre desviación estándar y media, expresada en porcentaje.
 ```python
 def caracterizacion():
     print()
@@ -263,7 +272,7 @@ plt.grid()
 
 ### 2. Descripción la señal en cuanto a su clasificación 
 
-La señal electromiográfica (EMG) es un registro de la actividad eléctrica generada por los músculos esqueléticos. Se clasifica como una señal biomédica no estacionaria y altamente variable, influenciada por la activación muscular, la fatiga y factores externos como la calidad de los electrodos y el ruido ambiental. En términos generales, la EMG se puede analizar en el dominio del tiempo y la frecuencia para extraer características que ayuden en aplicaciones como el control de prótesis, diagnóstico de trastornos neuromusculares y análisis del rendimiento muscular en deportes.
+La señal electromiográfica (EMG) es el registro de la actividad eléctrica generada por los músculos esqueléticos. Se clasifica como una señal biomédica no estacionaria y altamente variable debido a factores como la activación muscular, la fatiga, la calidad de los electrodos y el ruido ambiental. Su análisis en los dominios temporal y espectral permite extraer información relevante para aplicaciones como el control de prótesis, el diagnóstico de trastornos neuromusculares y el estudio del rendimiento deportivo. En el análisis temporal, se evalúan parámetros como la amplitud y la duración de los potenciales de acción de las unidades motoras. En el análisis espectral, técnicas como la transformada de Fourier y el análisis wavelet permiten descomponer la señal y caracterizar su dinámica.[3][4]
 
 ### 3. Tranformada de Fourier
 La transformada de Fourier permite convertir una señal del dominio del tiempo al dominio de la frecuencia.
@@ -326,11 +335,25 @@ plt.show()
     <img src="https://github.com/user-attachments/assets/d5f9a88b-1baf-47e8-86c6-3f8b68610271" alt="imagen" width="450">
 </p>
 
-- La densidad espectral muestra cómo la potencia de la señal se distribuye entre las diferentes frecuencias.
+- La Densidad Espectral de Potencia (DSP) mide la potencia de una señal en función de la frecuencia.[5]
 - magnitud: Representa la potencia de cada frecuencia, calculada como el cuadrado de la magnitud de la transformada de Fourier.
 Ambas gráficas son fundamentales para comprender el comportamiento de la señal en el dominio de la frecuencia. La primera da información sobre las frecuencias presentes, mientras que la segunda muestra cómo se distribuye la energía de la señal en esas frecuencias.
 
 ----
 ## Conclusión
 
-Este laboratorio demuestra el uso de Python para el procesamiento digital de señales, aplicando herramientas matemáticas fundamentales como la convolución, la correlación y la transformada de Fourier para analizar una señal electromiográfica.
+- La comparación entre correlación y convolución resaltó que la correlación mide la similitud sin invertir la señal, mostrando la independencia entre señales senoidales y cosenoidales.
+- El análisis de señales EMG en los dominios de tiempo y frecuencia nos permite caracterizar su comportamiento, y la DFT es crucial para identificar las distribuciones de frecuencia y potencia dominantes.
+
+----
+## Bibliografias
+- [1] https://la.mathworks.com/discovery/convolution.html
+- [2] https://radartopix.com/es/que-es-la-correlacion-en-las-senales/
+- [3] https://link.springer.com/chapter/10.1007/978-3-540-74471-9_31
+- [4] https://scielo.isciii.es/scielo.php?script=sci_arttext&pid=S1137-66272009000600003
+- [5] https://prezi.com/p/cwcmwut1n1fx/densidad-espectral-de-potencia/#:~:text=La%20Densidad%20Espectral%20de%20Potencia%20(DSP)%20mide%20la%20potencia%20de,frecuencias%20en%20una%20se%C3%B1al%20analizada
+----
+## Autores 
+- Samuel Peña
+- Ana Abril
+- Santiago Mora
