@@ -331,6 +331,7 @@ plt.show()
 - magnitud: Representa la potencia de cada frecuencia, calculada como el cuadrado de la magnitud de la transformada de Fourier.
 
 Ambas gráficas son fundamentales para comprender el comportamiento de la señal en el dominio de la frecuencia. La primera da información sobre las frecuencias presentes, mientras que la segunda muestra cómo se distribuye la energía de la señal en esas frecuencias.
+
 ----
 ##Conclusión
 
