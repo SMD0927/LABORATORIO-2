@@ -14,6 +14,7 @@ Instalar dependencias:
 pip install wfdb numpy matplotlib seaborn
 ##Introducción
 Este proyecto presenta ejemplos prácticos de procesamiento digital de señales mediante operaciones fundamentales como la convolución, la correlación y la transformada de Fourier, además del análisis de una señal electromiográfica (EMG) en funcion de la frecuencia.
+
 -----
 
 ## Convolución
