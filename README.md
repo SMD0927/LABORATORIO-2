@@ -243,7 +243,7 @@ caracterizacion()
 - Coeficiente de variación: 0.001834
 - Histograma:
 <p align="center">
-    <img src="https://github.com/user-attachments/assets/f49fce8f-274a-47b9-bdb4-d45a9bab7513" alt="imagen" width="450">
+    <img src="https://github.com/user-attachments/assets/d64b9102-821a-4754-a102-2a5977baab0c" alt="imagen" width="450">
 </p>
 - Frecuencia de muestreo: 2048 Hz
 
@@ -257,10 +257,8 @@ plt.ylabel("voltaje [mv]")
 plt.grid()
 ```
 <p align="center">
-    <img src="https://github.com/user-attachments/assets/a7661d06-f365-4edb-9084-1bd64b07475b" alt="imagen" width="450">
+    <img src="https://github.com/user-attachments/assets/9ea890d5-b5b2-46e3-aaf5-dd1f556bec0b" alt="imagen" width="450">
 </p>
-
-
 
 ### 2. Descripción la señal en cuanto a su clasificación 
 
@@ -307,9 +305,8 @@ plt.grid()
 Esta gráfica muestra las frecuencias presentes en la señal y su magnitud asociada.
 
 <p align="center">
-    <img src="https://github.com/user-attachments/assets/1cc48cf6-16d7-4152-945e-5f280ec6a2b6" alt="imagen" width="450">
+    <img src="https://github.com/user-attachments/assets/bbd94695-07fa-475c-8b62-6d6f98bfd948" alt="imagen" width="450">
 </p>
-
 
 #### 3.2. Grafica de la densidad espectral
 En la práctica, para señales discretas y de duración finita, la DEP se estima utilizando la transformada de Fourier discreta (DFT). Al calcular la DFT de una señal y normalizar adecuadamente, se obtiene una estimación de su densidad espectral de potencia. Esta estimación permite identificar las frecuencias predominantes y analizar cómo se distribuye la energía de la señal en el dominio de la frecuencia.
@@ -325,8 +322,9 @@ plt.show()
 ```
 
 <p align="center">
-    <img src="https://github.com/user-attachments/assets/9a883eae-0c13-455a-9441-be09de4f1103" alt="imagen" width="450">
+    <img src="https://github.com/user-attachments/assets/d5f9a88b-1baf-47e8-86c6-3f8b68610271" alt="imagen" width="450">
 </p>
+
 - La densidad espectral muestra cómo la potencia de la señal se distribuye entre las diferentes frecuencias.
 - magnitud: Representa la potencia de cada frecuencia, calculada como el cuadrado de la magnitud de la transformada de Fourier.
 Ambas gráficas son fundamentales para comprender el comportamiento de la señal en el dominio de la frecuencia. La primera da información sobre las frecuencias presentes, mientras que la segunda muestra cómo se distribuye la energía de la señal en esas frecuencias.
