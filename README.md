@@ -14,6 +14,7 @@ Instalar dependencias:
 pip install wfdb numpy matplotlib seaborn
 ##Introducción
 Este proyecto presenta ejemplos prácticos de procesamiento digital de señales mediante operaciones fundamentales como la convolución, la correlación y la transformada de Fourier, además del análisis de una señal electromiográfica (EMG) en funcion de la frecuencia.
+
 -----
 
 ## Convolución
@@ -39,7 +40,7 @@ y = np.convolve(x,h,mode='full')
 print('h[n] =', h)
 print('x[n] =',x)
 print('y[n] =',y)
-
+```
 $$
 h[n] = \begin{bmatrix}
 5 & 6 & 0 & 0 & 7 & 7 & 5
@@ -57,7 +58,7 @@ y[n] = \begin{bmatrix}
 5 & 6 & 5 & 26 & 61 & 73 & 48 & 70 & 117 & 144 & 120 & 79 & 49 & 91 & 56 & 40
 \end{bmatrix}
 $$
-```
+
 Este código en Python calcula la convolución discreta entre dos señales utilizando la función np.convolve() de NumPy. Primero, se definen dos listas, h y x, que representan la respuesta al impulso de un sistema y una señal de entrada, respectivamente. Luego, se aplica la convolución entre estas dos señales usando np.convolve(x, h, mode='full'), lo que genera una nueva señal y cuya longitud es la suma de las longitudes de x y h menos uno. La convolución es una operación fundamental en procesamiento de señales, ya que permite analizar cómo una señal se ve afectada por un sistema. Finalmente, el código imprime las señales h, x y y para visualizar los datos y el resultado de la convolución.
 
 ---
