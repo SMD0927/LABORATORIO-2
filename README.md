@@ -232,6 +232,7 @@ plt.grid()
 
 
 ### 2. Descripción la señal en cuanto a su clasificación 
+descripciiiion.....
 
 ### 3. Tranformada de Fourier
 #### 3.1. Grafica de la transformada de fourier
