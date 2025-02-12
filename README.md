@@ -1,5 +1,5 @@
 # Convolución, correlación y transformación 
- LABORATORIO - 2 PROCESAMIENTO DIGITAL DE SEÑALES 
+ LABORATORIO - 2 PROCESAMIENTO DIGITAL DE SEÑALES
 
 
 ## Requisitos
