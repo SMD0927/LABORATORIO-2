@@ -89,7 +89,7 @@ plt.grid()
 ```
 
 <p align="center">
-    <img src="https://github.com/user-attachments/assets/bfa4f9b0-51ed-40c3-b052-ca6c8a513123" alt="imagen" width="450">
+    <img src="https://github.com/user-attachments/assets/fa6848b8-bb89-4478-9399-7f6207653284" alt="imagen" width="450">
 </p>
 
 Este código genera dos gráficos para representar la respuesta al impulso h[n] y la señal de entrada x[n]. Para cada una, se crea una figura de 10x5 y se trazan dos representaciones: una línea verde (plt.plot()) y un gráfico de tipo stem (plt.stem()) para resaltar los valores discretos.
@@ -108,8 +108,10 @@ plt.stem(range(len(y)), y)
 ```
 
 <p align="center">
-    <img src="https://github.com/user-attachments/assets/df85b514-81c1-4ea5-bc03-17c59fa7ca0d" alt="imagen" width="450">
+    <img src="https://github.com/user-attachments/assets/030a2690-8be0-4fd6-bf8f-c76ff7ca80f9" alt="imagen" width="450">
 </p>
+
+
 
 Este fragmento de código genera un gráfico de la señal resultante y[n], que es el resultado de la convolución entre x[n] y h[n]. Se traza la señal con una línea verde usando plt.plot(y, color='g'). Luego, se superpone un gráfico de tipo stem con plt.stem(range(len(y)), y), resaltando los valores discretos de la señal.
 
@@ -144,9 +146,8 @@ plt.stem(range(len(x1)), x1)
 ```
 
 <p align="center">
-    <img src="https://github.com/user-attachments/assets/ff850885-25c4-4218-9973-a7d8fdd429ea" alt="imagen" width="450">
+    <img src="https://github.com/user-attachments/assets/a6b5c5b2-e536-418f-9f35-36c75dd033bd" alt="imagen" width="450">
 </p>
-
 
 Se genera y grafica una señal cosenoidal muestreada. Primero, se define un periodo de muestreo Ts = 1.25e-3, y luego se crea un arreglo n con valores enteros de 0 a 8 usando np.arange(0, 9). La función np.arange(inicio, fin) genera una secuencia de números desde inicio hasta fin-1 con un paso de 1 por defecto. En este caso, n representa los instantes de muestreo en el dominio discreto.
 
@@ -166,7 +167,7 @@ plt.grid()
 plt.stem(range(len(x2)), x2)
 ```
 <p align="center">
-    <img src="https://github.com/user-attachments/assets/1ad296f4-c07c-4391-b529-f078c5ddc9b6" alt="imagen" width="450">
+    <img src="https://github.com/user-attachments/assets/0926d754-2336-4313-8858-af1f28e19ed2" alt="imagen" width="450">
 </p>
 
 Al igual que en la gráfica anterior, este código genera y visualiza una señal, pero en este caso es una señal senoidal en lugar de una cosenoidal. Se usa el mismo conjunto de valores n = np.arange(0, 9), generado con np.arange(), y se calcula x2 como un seno de 100 Hz evaluado en los instantes n * Ts.
@@ -200,7 +201,7 @@ $$
 $$
 
 <p align="center">
-    <img src="https://github.com/user-attachments/assets/2616db03-294f-474f-81ec-f89dc7211d0e" alt="imagen" width="450">
+    <img src="https://github.com/user-attachments/assets/c0028249-0f51-430a-bebc-44794b47bfc0" alt="imagen" width="450">
 </p>
 
 Para visualizar la correlación, se crea una figura de 10x5 donde plt.plot(correlacion, color='black') dibuja la señal con una línea negra, mientras que plt.stem(range(len(correlacion)), correlacion) resalta sus valores discretos. 
